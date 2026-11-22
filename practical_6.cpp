@@ -1,63 +1,50 @@
-
 #include <iostream>
 #include <fstream>
 using namespace std;
 
-class Student
-{
-    char name[30];
-    int age, rollno;
-
-public:
-    void accept()
-    {
-        cout << "Enter Student Name: ";
-        cin >> name;
-
-        cout << "Enter Age: ";
-        cin >> age;
-
-        cout << "Enter Roll Number: ";
-        cin >> rollno;
-    }
-
-    void display()
-    {
-        cout << "\nStudent Details";
-        cout << "\nName: " << name;
-        cout << "\nAge: " << age;
-        cout << "\nRoll Number: " << rollno;
-    }
-};
-
 int main()
 {
-    Student s;
+    string name;
+    int age, rollno;
 
-    // Open file in write mode
-    ofstream fout;
-    fout.open("student.dat", ios::out | ios::binary);
+    // Create and open file in write mode
+    ofstream fout("student.txt");
 
-    s.accept();
-    // Write student object into file
-    fout.write((char*)&s, sizeof(s));
+    cout << "Enter Student Name: ";
+    cin >> name;
 
-    // Close file
+    cout << "Enter Age: ";
+    cin >> age;
+
+    cout << "Enter Roll Number: ";
+    cin >> rollno;
+
+    // Write student details into file
+    fout << "Student Details" << endl;
+    fout << "Name: " << name << endl;
+    fout << "Age: " << age << endl;
+    fout << "Roll Number: " << rollno << endl;
+
+    // Close the file
     fout.close();
 
-    cout << "\n\nData written successfully!";
+    cout << "\nData written successfully!\n";
 
-    // Open file in read mode
-    ifstream fin;
-    fin.open("student.dat", ios::in | ios::binary);
+    // Reopen file in read mode
+    ifstream fin("student.txt");
 
-    // Read student object from file
-    fin.read((char*)&s, sizeof(s));
+    cout << "\nReading Student Details:\n";
+    cout << "------------------------\n";
 
-    // Display student details
-    s.display();
+    string line;
 
-    // Close file
+    // Read and display file contents
+    while (getline(fin, line))
+    {
+        cout << line << endl;
+    }
+
+    // Close the file
     fin.close();
 
     return 0;
